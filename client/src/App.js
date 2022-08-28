@@ -20,34 +20,25 @@ const styles = them => ({
   }
 })
 
-const customers = [
-  {
-    'id' : 1,
-    'image' : 'https://placeimg.com/64/64/1', /*랜덤으로 이미지를 보여주는 사이트 주소*/
-    'name' : '홍길동',
-    'birthday' : '961222',
-    'gender' : '남자',
-    'job' : '대학생'
-  },
-  {
-    'id' : 2,
-    'image' : 'https://placeimg.com/64/64/2', /*랜덤으로 이미지를 보여주는 사이트 주소*/
-    'name' : '태연',
-    'birthday' : '961222',
-    'gender' : '여자',
-    'job' : '대학생'
-  },
-  {
-    'id' : 3,
-    'image' : 'https://placeimg.com/64/64/3', /*랜덤으로 이미지를 보여주는 사이트 주소*/
-    'name' : '이순신',
-    'birthday' : '961222',
-    'gender' : '여자',
-    'job' : '대학생'
-  }
-]
 
 class App extends React.Component {
+
+  state = {
+    customers: ""
+  }
+
+  componentDidMount() {
+    this.callApi()
+        .then(res => this.setState({customers: res}))
+        .catch(err => console.log(err));
+  }
+
+  callApi = async () => {
+    const response = await fetch('/api/customers');
+    const body = await response.json();
+    return body;
+  }
+
   render(){
     const {classes} = this.props; //위에서 정의한 style 적용
     return (
@@ -66,7 +57,7 @@ class App extends React.Component {
             <TableBody>
               {
                 //Map을 사용하려면 key라는 props를 꼭 사용해야 한다.
-                customers.map( c => {
+                this.state.customers ? this.state.customers.map( c => {
                   return(
                       <Customer
                           key={c.id}
@@ -78,7 +69,7 @@ class App extends React.Component {
                           job={c.job}
                       />
                   );
-                })
+                }) : ""
               }
             </TableBody>
           </Table>
