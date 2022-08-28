@@ -1,7 +1,6 @@
 import React from 'react';
 import Customer from './components/Customer';
 import CustomerAdd from './components/CunstomerAdd';
-import NaverLogin from './components/NaverLogin';
 import './App.css';
 import paper from '@material-ui/core/paper';
 import Table from '@material-ui/core/Table';
@@ -69,8 +68,6 @@ class App extends React.Component {
     const {classes} = this.props; //위에서 정의한 style 적용
     return (
         <div>
-          <CustomerAdd/><hr/>
-          <NaverLogin/><hr/>
           <paper className={classes.root}>
             <Table className={classes.table}>
               <TableHead>
@@ -87,18 +84,18 @@ class App extends React.Component {
                 {
                   //Map을 사용하려면 key라는 props를 꼭 사용해야 한다.
                   this.state.customers ? this.state.customers.map( c => {
-                        return(
-                            <Customer
-                                key={c.id}
-                                id={c.id}
-                                image={c.image}
-                                name={c.name}
-                                birthday={c.birthday}
-                                gender={c.gender}
-                                job={c.job}
-                            />
-                        );
-                      }) :
+                    return(
+                        <Customer
+                            key={c.id}
+                            id={c.id}
+                            image={c.image}
+                            name={c.name}
+                            birthday={c.birthday}
+                            gender={c.gender}
+                            job={c.job}
+                        />
+                    );
+                  }) :
                       <TableRow>
                         <TableCell colSpan="6" align="center">
                           <CircularProgress className={classes.progress} variant="determicate" value={this.state.completed}/>
@@ -108,6 +105,7 @@ class App extends React.Component {
               </TableBody>
             </Table>
           </paper>
+          <CustomerAdd/>
         </div>
     );
   }
